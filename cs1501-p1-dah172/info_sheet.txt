@@ -1,0 +1,61 @@
+========================================
+CS/COE 1501 Assignment Information Sheet
+----------------------------------------
+
+You must submit an information sheet with every assignment.  Also be sure
+to submit all materials following the procedures described on the
+submission procedures page.
+
+Name:  David James Hinton II
+
+Lecture section:  T/TH 2:30pm - 3:45pm
+
+Recitation day and time:  F 11:00am - 11:50pm
+
+Assignment #: 1 
+
+Program due date:  2/4/2019
+
+Handed in date:  2/4/2019
+
+Source code file name(s): ac_test.java, LL.java
+
+
+
+
+
+
+
+Other file name(s) (if relevant):
+
+
+
+
+
+
+
+Does your program run without error?: Yes
+
+If not, what is/are the error(s) and which parts of your program run
+correctly?:
+
+
+
+
+
+
+
+Additional comments to the grader:
+
+Since I am doing the writing portion of the class among other things, I ran out of time to ensure words were not duplicated in the displayed predictions if the word is in both the user history and the dictionary.
+
+Also, if the displayed predictions don't contain the full 5 words, the remaining (empty) spots in the array will have a null placeholder. 
+
+Also, I accidentally uploaded LL.class not sure if that is going to have any effect on your end.
+
+Thanks!
+
+
+
+
+
