@@ -1,0 +1,1 @@
+Implemented the DLB trie for the user history. I did this to save time coding by essentially building in all the methods that I would need for both the dictionary and the user_history into the LL(dlb) trie.
