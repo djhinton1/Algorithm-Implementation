@@ -1,0 +1,68 @@
+The implementation of a heap PQ based data structure was split into 3 different supporting classes:
+
+  1. Cars.java - holds information related to an individual car
+  2. IndexMinPQ.java - this is the priority queue (adapted from the textbook)
+  3. CarStructure.java - assembles the relevant priority queues (one for price, one for miles and then multiple depending on the car types)
+
+Since car models are unique to the car company, the 'get car by miles/price for a specific make and model' is implemented using
+only the car model and not the make.
+
+Cars.java:
+-----------------------------------------------
+1. At first I tried to use a comparator to decide when to compare based on miles or based on price, but that was too confusing for me to
+  get working and I really just wanted to finish the project.
+  So, the comparison metric is decided in IndexMinQP when the PQ is instantiated.
+
+2. There are 2 constructors here, one for when we are passing in a line of text, and another when we have the information separated.
+  I suppose, now that I am looking at it, I could have just appended the separate information and called the one constructor for a complete line of text.
+  ohh well.
+
+
+IndexMinPQ.java:
+----------------------------------------------------
+1. firstly, this was adapted from the text however I had to make sure that it supported resizing of the arrays -- since we can add an unlimited number of cars to the list.
+  this was done by simply by resizing them if the index we were attempting to insert was greater then (array.length - 1) (to maintain 1 indexing);
+
+2. since the arrays were fixed length, the original implementation only set deleted cars to -1 or null (depending on the array).
+  and since the arrays must resize in my implementation, the original implementation with resizable arrays would behave in a way such that we could delete cars
+  but inserted cars would always be inserted at the end of the array. the result would be an array that predictably resizes with the insertion of the (array.length)'th car.
+  regardless if we deleted cars.
+
+3. to further improve performance (i.e. we are not resizing indefinitely as more cars are added regardless of deletion), when a car is deleted, the index of the deleted car
+  is added to an array list and if the array list is not empty, then the next added car will be added at the most recently deleted car index (given by removing from the
+  beginning of the array list every time). This happens in O(1) time since we are removing from the begging every time. And the array list can be populated without knowing
+  how many cars we are going to delete. if the array list is empty, well that means that there are no open indexes (made by deleting cars) and so the next insert should
+  go at the end of the array and may result in an array resize.
+
+4. the next change made was in relation to how the cars were compared, originally, it was based on the compareTo method of the object but I need it to be dynamic since
+  we compare based on both price and mileage. the method variable (BY_PRICE, BY_MILES) determines how we compare in the class's "greater" method. Obtaining the car's
+  price and miles is done in O(1) time as well.
+
+5. now, the project requires us to make changes or deletions based on the car vin however the arrays are organized to be indexable and the values are cars NOT vins.
+  so, I created a secondary structure that holds the car's vin as the key and the value is the index in the PQ arrays at which that car is stored. since operations with
+  the car vin (changes and deletions) must be O(log n), the data structure chosen here is a hash table. this is more important when looking at how the information for
+  specific make and models is stored (to be discussed in CarStructure.java). for now, using a hash table makes indexing into the arrays with a given vin O(1) yet again.
+
+6. my method for updating a car includes removing the car from the list, making the necessary updates, and then adding the updated car back to the PQs. This ensures that
+  the PQs maintain priority instead of just making changes to a car and not doing anything. its very easy to just change a car and not have the PQs look to see if
+  some rearrangement needs to happen based on that change. so this implementation accounts for that since the PQs will automatically maintain priority when a car is added.
+  in this case, since we are removing and then reinserting the behavior results in O(2 * log n) -- one for removal and one for insertion.
+
+
+CarStructure.java:
+--------------------------------------------------------
+1. the carStructure is the data structure to which we add cars in the main method. since we want to know cars by price and cars by miles and cars by price/mile by specific
+  model, this structure is composed of several PQs:
+
+  allByMiles - one PQ based on mileage comparisons
+  allByPrice - one PQ based on price comparisons
+  modelsByMiles - a tree map that contains one PQ based on mileage comparisons for every different model in the list
+  modelsByPrice - a tree map that contains one PQ based on price comparisons for every different model in the list
+
+  when a car is added, it is added to 4 different priority queues: allByMiles, allByPrice, and the PQs associated with its specific model for price and mileage.
+
+2. storing the model priority queues in a TreeMap allows me to access the correct priority queue in O(log n) time,
+  and then do whatever necessary (add, delete, etc.).
+
+EXAMPLE: if we wanted to know the lowest mileage Ford Explorer we would first look at the tree map "modelsByMiles" and use the key "Explorer" to get the relevant PQ.
+  and then we simply just get the one with highest priority (lowest miles), which happens in O(1) time. Therefore, retrieval happens in O(log n) time.

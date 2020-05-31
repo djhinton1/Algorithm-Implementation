@@ -1,0 +1,51 @@
+========================================
+CS/COE 1501 Assignment Information Sheet
+----------------------------------------
+
+You must submit an information sheet with every assignment.  Also be sure
+to submit all materials following the procedures described on the
+submission procedures page.
+
+Name:  David Hinton
+
+Lecture section:  C
+
+Recitation day and time:  F11
+
+Assignment #:  5
+
+Program due date:  4/17/20
+
+Handed in date:  4/17/20
+
+Source code file name(s):
+HeftyInteger.java
+
+
+
+
+
+
+
+Other file name(s) (if relevant):
+LinkedList.java
+
+
+
+
+
+
+Does your program run without error?: Y
+
+If not, what is/are the error(s) and which parts of your program run
+correctly?:
+
+
+
+
+
+
+
+Additional comments to the grader:
+
+Multiplication is fine but I had a tone of projects and exams due this week so I ran out of time to bring project to completion. XGCD does work albeit pretty slow for large numbers.
